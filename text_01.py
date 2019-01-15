@@ -41,16 +41,26 @@ while i == 1:
         # 获取左上和右下的坐标
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
         # 等比例缩放找到按钮
-        x = int(left + ((right - left) * 0.833743532))
-        y = int(top + (bottom - top) * 0.79958043)
+        # x = 880
+        # y = 390
+        x = [0]
+        x1 = int(left + ((right - left) * 0.833743532))
+        y1 = int(top + (bottom - top) * 0.79958043)
+        x2 = int(left + ((right - left) * 0.666293775))
+        y2 = int(top + (bottom - top) * 0.593477435)
+        x.extend([x1, x2, x1])
+        y = {x1: y1, x2: y2, x1: y1}
         # 设置随机延时和抖动
-        tr = random.randint(1, 3)
-        pr = random.randint(3, 10)
+        tr = random.uniform(1, 2)
+        pr = random.uniform(3, 10)
         # 打印随机抖动
         print('抖动 x轴=' + str(pr) + ' ,' + 'y轴=' + str(tr))
         # 移动到对应位置，点击鼠标
-        pyautogui.moveTo(x + pr, y + tr)
-        pyautogui.click()
-        # 打印和设置延时
-        print('延时' + str(tr))
-        time.sleep(tr)
+        for X in x:
+            if X != 0:
+                Y = y[X]
+                pyautogui.moveTo(X + pr, Y + tr)
+                pyautogui.click()
+                # 打印和设置延时
+                print('延时' + str(tr))
+                time.sleep(tr)
