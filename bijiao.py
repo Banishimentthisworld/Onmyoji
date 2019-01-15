@@ -20,7 +20,7 @@ def getMH(a,b):
     for i in range(0, len(a)):
         if a[i] == b[i]:
             dist += 1
-    return dist
+    return (dist/len(a))*100
 
 # 获得图片相似度
 def getImgHash(pic):
@@ -47,7 +47,7 @@ def getImgHash(pic):
     return bitls
 
 #基准图片
-a = getImgHash(".//base_photo//jiji.jpg")
+a = getImgHash(".//base_photo//ji.jpg")
 files = os.listdir(".//test_photo")
 for file in files:
     b = getImgHash(".//test_photo//" + str(file))
