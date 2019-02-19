@@ -22,7 +22,7 @@ def window_capture(filename):
     hwnd = win32gui.FindWindow(0, titlename)  # 根据titlename信息查找窗口
     win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
     left, top, right, bottom = win32gui.GetWindowRect(hwnd)  # 获取左上和右下的坐标
-    w = int((right - left) * 0.318)  # 截图图片的宽
+    w = int((right - left ) * 0.318)  # 截图图片的宽
     h = int((bottom - top - 50) * 0.217)  # 截图图片的高
     print(w)
     # 为bitmap开辟空间
