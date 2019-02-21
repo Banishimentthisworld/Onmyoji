@@ -85,15 +85,15 @@ if __name__ == '__main__':
         win32gui.SetForegroundWindow(hwnd)
         # 获取窗口信息
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        start_bottom = [(left + (right - left) * 0.864290509), (top + (bottom - top) * 0.78)]
+        start_bottom = [(left + (right - left) * 0.864290509), (top + (bottom - top) * 0.8)]
         explore_bottom = [(left + (right - left) * 0.734), (top + (bottom - top) * 0.759)]
         left_bottom = [(left + (right - left) * 0.3), (top + (bottom - top) * 0.759)]
         # 截图
-        os.remove('ji.jpg')
         for i in range(10):
             window_capture('ji.jpg')
         # 查找圆
         cycles = cycle_capture('ji.jpg')
+        os.remove('ji.jpg')
         # 如果没有检测到圆，就点击开始按钮
         if cycles is None:
             # 超过十次没有发现圆，可能阴阳师走到了最右边
