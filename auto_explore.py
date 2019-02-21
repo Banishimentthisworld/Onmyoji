@@ -70,7 +70,17 @@ def cycle_capture(img_name):
         # cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
         # cv2.imshow('ji', img)
         # cv2.waitKey(1)
-        return circles[0]#[::-1]
+        cycle_fake = []
+        for circle in circles[0]:
+            x = int(circle[0])
+            y = int(circle[1])
+            r = int(circle[2])
+            cycle_fake.extend([[x, y, r]])
+
+        def first(elem):
+            return elem[0]
+        cycle_fake.sort(key=first)
+        return cycle_fake
 
 
 if __name__ == '__main__':
