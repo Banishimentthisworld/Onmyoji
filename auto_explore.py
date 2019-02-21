@@ -1,6 +1,6 @@
 import time
 import pyautogui
-# import syd
+import os
 import win32gui, win32ui, win32con, win32api
 import cv2
 import random
@@ -89,11 +89,11 @@ if __name__ == '__main__':
         explore_bottom = [(left + (right - left) * 0.734), (top + (bottom - top) * 0.759)]
         left_bottom = [(left + (right - left) * 0.3), (top + (bottom - top) * 0.759)]
         # 截图
+        os.remove('ji.jpg')
         for i in range(10):
-            window_capture("ji.jpg")
+            window_capture('ji.jpg')
         # 查找圆
         cycles = cycle_capture('ji.jpg')
-
         # 如果没有检测到圆，就点击开始按钮
         if cycles is None:
             # 超过十次没有发现圆，可能阴阳师走到了最右边
