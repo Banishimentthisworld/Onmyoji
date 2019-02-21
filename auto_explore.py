@@ -4,7 +4,7 @@ import pyautogui
 import win32gui, win32ui, win32con, win32api
 import cv2
 import random
-import numpy as np
+
 
 def window_capture(filename):
     # 窗口的编号，0号表示当前活跃窗口
@@ -51,7 +51,7 @@ def cycle_capture(img_name):
     # param1的具体实现，用于边缘检测
     canny = cv2.Canny(img, 40, 80)
     # 霍夫变换圆检测
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 50, param1=50, param2=35, minRadius=20, maxRadius=45)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 50, param1=50, param2=35, minRadius=25, maxRadius=45)
     if circles is None:
         return None
     else:
@@ -65,12 +65,12 @@ def cycle_capture(img_name):
             # 在原图用指定颜色圈出圆，参数设定为int所以圈画存在误差
             img = cv2.circle(img, (x, y), r, (0, 0, 255), 1, 8, 0)
         # 显示新图像
-        cv2.destroyAllWindows()
-        img = cv2.resize(img, (int(776/1.5), int(230/1.5)))
-        cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('ji', img)
-        cv2.waitKey(1)
-        return circles[0][::-1]
+        # cv2.destroyAllWindows()
+        # img = cv2.resize(img, (int(776/1.5), int(230/1.5)))
+        # cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
+        # cv2.imshow('ji', img)
+        # cv2.waitKey(1)
+        return circles[0]#[::-1]
 
 
 if __name__ == '__main__':
@@ -80,13 +80,12 @@ if __name__ == '__main__':
         tr = random.uniform(0.5, 1)
         # 窗口置顶
         titlename = "阴阳师-网易游戏"
-
         hwnd = win32gui.FindWindow(0, titlename)
         win32gui.EnableWindow(hwnd, True)
         win32gui.SetForegroundWindow(hwnd)
         # 获取窗口信息
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        start_bottom = [(left + (right - left) * 0.876), (top + (bottom - top) * 0.723)]
+        start_bottom = [(left + (right - left) * 0.864290509), (top + (bottom - top) * 0.760)]
         explore_bottom = [(left + (right - left) * 0.734), (top + (bottom - top) * 0.759)]
         left_bottom = [(left + (right - left) * 0.3), (top + (bottom - top) * 0.759)]
         # 截图
@@ -97,17 +96,19 @@ if __name__ == '__main__':
 
         # 如果没有检测到圆，就点击开始按钮
         if cycles is None:
+            # 超过十次没有发现圆，可能阴阳师走到了最右边
             if None_k > 10:
+                pr = random.uniform(3, 10)
                 pyautogui.moveTo(left_bottom[0] + pr, left_bottom[1] + pr)
                 pyautogui.click()
                 time.sleep(tr)
             else:
                 print('少女祈祷中')
                 pr = random.uniform(3, 10)
-                pyautogui.moveTo(start_bottom[0] + pr, start_bottom[1] + pr)
+                pyautogui.moveTo(start_bottom[0] + pr, start_bottom[1])
                 pyautogui.click()
                 time.sleep(tr)
-                # 超过十次没有发现圆，可能阴阳师走到了最右边
+                # 计数＋1
                 None_k = None_k + 1
 
         else:
@@ -123,7 +124,7 @@ if __name__ == '__main__':
                 pyautogui.click()
                 time.sleep(tr)
                 # 排除结算界面的干扰，点击两下
-                pyautogui.moveTo(start_bottom[0] + pr, start_bottom[1] + pr)
+                pyautogui.moveTo(start_bottom[0] + pr, start_bottom[1])
                 pyautogui.click()
                 time.sleep(tr)
                 pyautogui.click()
