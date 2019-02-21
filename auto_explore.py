@@ -85,7 +85,7 @@ if __name__ == '__main__':
         win32gui.SetForegroundWindow(hwnd)
         # 获取窗口信息
         left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        start_bottom = [(left + (right - left) * 0.864290509), (top + (bottom - top) * 0.760)]
+        start_bottom = [(left + (right - left) * 0.864290509), (top + (bottom - top) * 0.78)]
         explore_bottom = [(left + (right - left) * 0.734), (top + (bottom - top) * 0.759)]
         left_bottom = [(left + (right - left) * 0.3), (top + (bottom - top) * 0.759)]
         # 截图
