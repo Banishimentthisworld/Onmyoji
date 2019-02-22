@@ -18,7 +18,8 @@ def window_capture(filename):
     # 创建bigmap准备保存图片
     saveBitMap = win32ui.CreateBitmap()
     # 获取窗口信息
-    titlename = "阴阳师-网易游戏"
+    # titlename = "阴阳师-网易游戏"
+    titlename = "阴阳师 - MuMu模拟器"
     # 根据titlename信息查找窗口
     hwnd = win32gui.FindWindow(0, titlename)
     # 获取左上和右下的坐标
@@ -26,10 +27,10 @@ def window_capture(filename):
     # 截图图片的宽
     w = int((right - left) * 0.8)
     # 截图图片的高
-    h = int((bottom - top) * 0.4)
+    h = int((bottom - top) * 0.7)
     # 截取图片的起点
     s = int(left + (right - left) * 0.1)
-    e = int(top + (bottom - top) * 0.3)
+    e = int(top + (bottom - top) * 0.15)
     # 为bitmap开辟空间
     saveBitMap.CreateCompatibleBitmap(mfcDC, w, h)
     # 高度saveDC，将截图保存到saveBitmap中
@@ -37,13 +38,14 @@ def window_capture(filename):
     # 截取长宽为（w，h）的图片
     saveDC.BitBlt((0, 0), (w, h), mfcDC, (s, e), win32con.SRCCOPY)
     saveBitMap.SaveBitmapFile(saveDC, filename)
-
+    # 释放内存
+    mfcDC.DeleteDC()
 
 def cycle_capture(img_name):
     # 载入图片
     img = cv2.imread(img_name)
     # 缩放图片
-    img = cv2.resize(img, (776, 230))
+    img = cv2.resize(img, (776, 402))
     # 降噪（模糊处理用来减少瑕疵点）
     result = cv2.blur(img, (5, 5))
     # 灰度化,就是去色（类似老式照片）
@@ -65,11 +67,11 @@ def cycle_capture(img_name):
             # 在原图用指定颜色圈出圆，参数设定为int所以圈画存在误差
             img = cv2.circle(img, (x, y), r, (0, 0, 255), 1, 8, 0)
         # 显示新图像
-        # cv2.destroyAllWindows()
-        # img = cv2.resize(img, (int(776/1.5), int(230/1.5)))
-        # cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
-        # cv2.imshow('ji', img)
-        # cv2.waitKey(1)
+        cv2.destroyAllWindows()
+        img = cv2.resize(img, (int(776/1.5), int(402/1.5)))
+        cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
+        cv2.imshow('ji', img)
+        cv2.waitKey(1)
         cycle_fake = []
         for circle in circles[0]:
             x = int(circle[0])
@@ -89,7 +91,7 @@ if __name__ == '__main__':
         # 随机延时，抖动
         tr = random.uniform(0.5, 1)
         # 窗口置顶
-        titlename = "阴阳师-网易游戏"
+        titlename = "阴阳师 - MuMu模拟器"
         hwnd = win32gui.FindWindow(0, titlename)
         win32gui.EnableWindow(hwnd, True)
         win32gui.SetForegroundWindow(hwnd)
@@ -129,7 +131,7 @@ if __name__ == '__main__':
                 print('Master!圆形发现！ x：' + str(cycle[0]) + '  y：' + str(cycle[1]) + '  r：' + str(cycle[2]))
                 # 如果检测到圆，就点击圆心
                 x1 = int(left + (((cycle[0] + 97) / 970) * (right - left)))
-                y1 = int(top + (((cycle[1] + 172.5) / 575) * (bottom - top)))
+                y1 = int(top + (((cycle[1] + 86.25) / 575) * (bottom - top)))
                 pyautogui.moveTo(x1, y1)
                 pyautogui.click()
                 time.sleep(tr)
