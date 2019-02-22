@@ -57,21 +57,21 @@ def cycle_capture(img_name):
     if circles is None:
         return None
     else:
-        for circle in circles[0]:
-            # 圆的基本信息
-            # 坐标行列(就是圆心)
-            x = int(circle[0])
-            y = int(circle[1])
-            # 半径
-            r = int(circle[2])
-            # 在原图用指定颜色圈出圆，参数设定为int所以圈画存在误差
-            img = cv2.circle(img, (x, y), r, (0, 0, 255), 1, 8, 0)
-        # 显示新图像
-        cv2.destroyAllWindows()
-        img = cv2.resize(img, (int(776/1.5), int(402/1.5)))
-        cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('ji', img)
-        cv2.waitKey(1)
+        # for circle in circles[0]:
+        #     # 圆的基本信息
+        #     # 坐标行列(就是圆心)
+        #     x = int(circle[0])
+        #     y = int(circle[1])
+        #     # 半径
+        #     r = int(circle[2])
+        #     # 在原图用指定颜色圈出圆，参数设定为int所以圈画存在误差
+        #      img = cv2.circle(img, (x, y), r, (0, 0, 255), 1, 8, 0)
+        # # 显示新图像
+        # cv2.destroyAllWindows()
+        # img = cv2.resize(img, (int(776/1.5), int(402/1.5)))
+        # cv2.namedWindow('ji', cv2.WINDOW_AUTOSIZE)
+        # cv2.imshow('ji', img)
+        # cv2.waitKey(1)
         cycle_fake = []
         for circle in circles[0]:
             x = int(circle[0])
