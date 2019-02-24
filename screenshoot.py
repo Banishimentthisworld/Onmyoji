@@ -33,8 +33,8 @@ def window_capture(filename):
 titlename = "阴阳师-网易游戏"
 hwnd = win32gui.FindWindow(0, titlename)
 left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-pyautogui.moveTo(left + 2, top + 2)
-pyautogui.click()
+win32gui.EnableWindow(hwnd, True)
+win32gui.SetForegroundWindow(hwnd)
 # 截图并打印截图耗时
 beg = time.time()
 for i in range(10):
