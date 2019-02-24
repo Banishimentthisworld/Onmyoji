@@ -26,7 +26,9 @@ for h, t in hwnd_title.items():
         print(hd[hh])
 
 # 获取窗口信息
-while True:
+i = 1
+while i == 1:
+    h = 1
     while h <= hh:
         hwnd = hd[h]
         h += 1
