@@ -26,9 +26,7 @@ for h, t in hwnd_title.items():
         print(hd[hh])
 
 # 获取窗口信息
-i = 1
-while i == 1:
-    h = 1
+while True:
     while h <= hh:
         hwnd = hd[h]
         h += 1
@@ -48,12 +46,12 @@ while i == 1:
         y1 = int(top + (bottom - top) * 0.79958043)
         x2 = int(left + ((right - left) * 0.666293775))
         y2 = int(top + (bottom - top) * 0.593477435)
-        # x.extend([x1, x2, x1])
-        # y = {x1: y1, x2: y2, x1: y1}
-        x.extend([x1])
-        y = {x1: y1}
+        x.extend([x1, x2, x1])
+        y = {x1: y1, x2: y2, x1: y1}
+        # x.extend([x1])
+        # y = {x1: y1}
         # 设置随机延时和抖动
-        tr = random.uniform(1, 1.5)
+        tr = random.uniform(0.5, 1)
         pr = random.uniform(3, 10)
         # 打印随机抖动
         print('抖动 x轴=' + str(pr) + ' ,' + 'y轴=' + str(tr))
