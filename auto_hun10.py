@@ -3,7 +3,12 @@ import time
 import win32gui
 import pyautogui
 import win32con
-
+import button
+import threading
+import sys
+import pyHook
+import pythoncom
+import queue
 # 历遍所有窗口，筛选出阴阳师的窗口
 hwnd_title = dict()
 
@@ -25,47 +30,57 @@ for h, t in hwnd_title.items():
         hh += 1
         print(hd[hh])
 
-# 获取窗口信息
-i = 1
-while i == 1:
-    h = 1
-    while h <= hh:
-        hwnd = hd[h]
-        h += 1
-        # 根据titlename信息查找窗口
-        # hwnd = win32gui.FindWindow(0,titlename)
-        win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
-        # 窗口激活置顶
-        win32gui.EnableWindow(hwnd, True)
-        win32gui.SetForegroundWindow(hwnd)
-        # 获取左上和右下的坐标
-        left, top, right, bottom = win32gui.GetWindowRect(hwnd)
-        # 等比例缩放找到按钮
-        # x = 880
-        # y = 390
-        x = [0]
-        x1 = int(left + ((right - left) * 0.833743532))
-        y1 = int(top + (bottom - top) * 0.79958043)
-        x2 = int(left + ((right - left) * 0.666293775))
-        y2 = int(top + (bottom - top) * 0.593477435)
-        x.extend([x1, x2, x1])
-        y = {x1: y1, x2: y2, x1: y1}
-        # x.extend([x1])
-        # y = {x1: y1}
-        # 设置随机延时和抖动
-        tr = random.uniform(0.5, 1)
-        pr = random.uniform(3, 10)
-        # 打印随机抖动
-        print('抖动 x轴=' + str(pr) + ' ,' + 'y轴=' + str(tr))
-        # 移动到对应位置，点击鼠标
-        for X in x:
-            if X != 0:
-                Y = y[X]
-                pyautogui.moveTo(X + pr, Y + tr)
-                pyautogui.click()
-                # 打印和设置延时
+
+def onKey(event):
+    if event.Key == 'Q':
+        sys.exit(0)
+    return True
 
 
-                print('延时' + str(tr))
-                time.sleep(tr)
+def Keyboard():
+    hookmanager = pyHook.HookManager()
+    hookmanager.KeyDown = onKey
+    hookmanager.HookKeyboard()
+    pythoncom.PumpMessages()
 
+
+def main0():
+    # 获取窗口信息
+    i = 1
+    while i == 1:
+        h = 1
+        while h <= hh:
+            hwnd = hd[h]
+            h += 1
+            # 根据titlename信息查找窗口
+            # hwnd = win32gui.FindWindow(0,titlename)
+            win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
+            # 窗口激活置顶
+            win32gui.EnableWindow(hwnd, True)
+            win32gui.SetForegroundWindow(hwnd)
+            # 等比例缩放找到按钮
+            x = [0]
+            ratios = ('button_h10', 'button_xsfy')
+            buttons = button.get_bottom(hwnd, ratios, button.ratio_types)
+            x.extend(['button_h10', 'button_xsfy', 'button_h10'])
+            # 设置随机延时和抖动
+            tr = random.uniform(0.5, 1)
+            pr = random.uniform(3, 10)
+            # 打印随机抖动
+            print('抖动 x轴=' + str(pr) + ' ,' + 'y轴=' + str(tr))
+            # 移动到对应位置，点击鼠标
+            for X in x:
+                if X != 0:
+                    pyautogui.moveTo(buttons[X][0] + pr, buttons[X][1] + tr)
+                    pyautogui.click()
+                    # 打印和设置延时
+                    print('延时' + str(tr))
+                    time.sleep(tr)
+
+
+
+if __name__ == '__main__':
+    t1 = threading.Thread(target=Keyboard,)
+    t2 = threading.Thread(target=main0, )
+    t1.start()
+    t2.start()

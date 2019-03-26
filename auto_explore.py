@@ -18,8 +18,8 @@ def window_capture(filename):
     # 创建bigmap准备保存图片
     saveBitMap = win32ui.CreateBitmap()
     # 获取窗口信息
-    # titlename = "阴阳师-网易游戏"
-    titlename = "阴阳师 - MuMu模拟器"
+    titlename = "阴阳师-网易游戏"
+    # titlename = "阴阳师 - MuMu模拟器"
     # 根据titlename信息查找窗口
     hwnd = win32gui.FindWindow(0, titlename)
     # 获取左上和右下的坐标
@@ -91,7 +91,8 @@ if __name__ == '__main__':
         # 随机延时，抖动
         tr = random.uniform(0.5, 1)
         # 窗口置顶
-        titlename = "阴阳师 - MuMu模拟器"
+        titlename = "阴阳师-网易游戏"
+        # titlename = "阴阳师 - MuMu模拟器"
         hwnd = win32gui.FindWindow(0, titlename)
         win32gui.EnableWindow(hwnd, True)
         win32gui.SetForegroundWindow(hwnd)
